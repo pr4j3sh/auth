@@ -7,6 +7,7 @@ import Bookmark from "./pages/bookmark";
 import Notification from "./pages/notification";
 import Profile from "./pages/profile";
 import Event from "./pages/event";
+import Inbox from "./pages/inbox";
 
 export const router = createBrowserRouter([
   {
@@ -18,8 +19,8 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/chat",
-        element: <Chat />,
+        path: "/inbox",
+        element: <Inbox />,
       },
       {
         path: "/map",
@@ -42,5 +43,9 @@ export const router = createBrowserRouter([
   {
     path: "/event",
     element: <Event />,
+  },
+  {
+    path: "/chat",
+    element: <Chat />,
   },
 ]);

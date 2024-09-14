@@ -11,7 +11,7 @@ export function FooterMenu() {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>
-          <Link to="/chat">Chat</Link>
+          <Link to="/inbox">Inbox</Link>
         </MenubarTrigger>
       </MenubarMenu>
       <MenubarMenu>
