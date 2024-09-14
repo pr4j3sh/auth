@@ -6,7 +6,12 @@ export function SecondaryFooterMenu() {
     <Menubar className="justify-end sticky bottom-2 z-100">
       <MenubarMenu>
         <MenubarTrigger>
-          <Link to="/">Book</Link>
+          <Link to="/">Bookmark</Link>
+        </MenubarTrigger>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>
+          <Link to="/">Attend</Link>
         </MenubarTrigger>
       </MenubarMenu>
     </Menubar>
