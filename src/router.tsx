@@ -6,6 +6,7 @@ import Chat from "./pages/chat";
 import Bookmark from "./pages/bookmark";
 import Notification from "./pages/notification";
 import Profile from "./pages/profile";
+import Event from "./pages/event";
 
 export const router = createBrowserRouter([
   {
@@ -37,5 +38,9 @@ export const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />,
+  },
+  {
+    path: "/event",
+    element: <Event />,
   },
 ]);

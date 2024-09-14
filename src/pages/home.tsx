@@ -9,9 +9,15 @@ export default function Home() {
       <HeaderMenu />
       <Input type="text" placeholder="Search..." />
       <div className="snap-x scroll-auto flex gap-2 py-2 overflow-x-auto">
-        <Badge className="scroll-mx-0.5 snap-start">Music</Badge>
-        <Badge className="scroll-mx-0.5 snap-start">Food</Badge>
-        <Badge className="scroll-mx-0.5 snap-start">Technology</Badge>
+        <Badge variant="outline" className="scroll-mx-0.5 snap-start">
+          Music
+        </Badge>
+        <Badge variant="outline" className="scroll-mx-0.5 snap-start">
+          Food
+        </Badge>
+        <Badge variant="outline" className="scroll-mx-0.5 snap-start">
+          Technology
+        </Badge>
       </div>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         Events

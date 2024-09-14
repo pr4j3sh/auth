@@ -14,7 +14,7 @@ export function MapCard() {
     <Card className="w-80 shrink-0 snap-center">
       <CardHeader>
         <div className="flex flex-col items-start gap-2">
-          <Badge>Technology</Badge>
+          <Badge variant="secondary">Technology</Badge>
           <CardTitle>Convex Hackathon</CardTitle>
         </div>
         <CardDescription className="flex h-5 items-center space-x-2">
