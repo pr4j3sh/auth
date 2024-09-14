@@ -8,11 +8,17 @@ import Notification from "./pages/notification";
 import Profile from "./pages/profile";
 import Event from "./pages/event";
 import Inbox from "./pages/inbox";
+import ProtectedRoute from "./components/protected-route";
+import Auth from "./pages/auth";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: (
+      <ProtectedRoute>
+        <Root />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/",
@@ -34,18 +40,38 @@ export const router = createBrowserRouter([
   },
   {
     path: "/notification",
-    element: <Notification />,
+    element: (
+      <ProtectedRoute>
+        <Notification />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/profile",
-    element: <Profile />,
+    element: (
+      <ProtectedRoute>
+        <Profile />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/event",
-    element: <Event />,
+    element: (
+      <ProtectedRoute>
+        <Event />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/chat",
-    element: <Chat />,
+    element: (
+      <ProtectedRoute>
+        <Chat />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
   },
 ]);
