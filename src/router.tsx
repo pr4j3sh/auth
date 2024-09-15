@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/event",
+    path: "/event/:eventId",
     element: (
       <ProtectedRoute>
         <Event />

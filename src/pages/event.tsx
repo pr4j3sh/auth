@@ -1,11 +1,87 @@
-import { SecondaryFooterMenu } from "@/components/secondary-footer-menu";
+import SecondaryFooterMenu from "@/components/secondary-footer-menu";
 import SecondaryHeaderMenu from "@/components/secondary-header-menu";
 import SampleEvent from "../assets/sample-event.jpg";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useParams } from "react-router-dom";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
+import { useEffect, useState } from "react";
+import {
+  calculateDistance,
+  calculateTravelTime,
+  getCurrentLocation,
+} from "@/lib/utils";
+import moment from "moment";
 
 export default function Event() {
+  const { eventId } = useParams();
+  const event = useQuery(api.events.getEventById, {
+    eventId: eventId!,
+  });
+
+  const [coords, setCoords] = useState({ lat: 0, lon: 0 });
+  const [distance, setDistance] = useState<string>("");
+  const [travelTime, setTravelTime] = useState<string>("");
+  const [address, setAddress] = useState({});
+
+  const averageSpeed = 60; // Average speed in km/h
+  const apiKey = "a96347f8b85b459b82c1394cb3138232";
+
+  useEffect(() => {
+    async function fetchLocation() {
+      try {
+        const currentPosition = await getCurrentLocation();
+        setCoords({
+          lat: currentPosition.coords.latitude,
+          lon: currentPosition.coords.longitude,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchLocation();
+  }, []);
+  useEffect(() => {
+    async function fetchLocationAndData() {
+      try {
+        const distance = calculateDistance(
+          coords?.lat,
+          coords?.lon,
+          parseFloat(event?.lat),
+          parseFloat(event?.lon),
+        );
+        setDistance(distance.toString());
+
+        const time = calculateTravelTime(distance.toString(), averageSpeed);
+        setTravelTime(time);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchLocationAndData();
+  }, [coords?.lat, coords?.lon, event?.lat, event?.lon]);
+
+  useEffect(() => {
+    async function fetchAddress() {
+      try {
+        const res = await fetch(
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${parseFloat(event?.lat)}&lon=${parseFloat(event?.lon)}&apiKey=${apiKey}`,
+        );
+
+        const data = await res.json();
+        setAddress(data?.features[0].properties);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchAddress();
+  }, [event?.lat, event?.lon]);
+
   return (
     <div className="container min-h-screen md:w-2/4 mx-auto py-4 md:px-0 px-4 flex flex-col gap-2">
       <SecondaryHeaderMenu />
@@ -16,39 +92,28 @@ export default function Event() {
           loading="lazy"
           className="aspect-video rounded-md object-cover"
         />
-        <Badge variant="secondary">Technology</Badge>
+        <Badge variant="secondary">{event?.category}</Badge>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Convex Hackathon
+          {event?.title}
         </h1>
         <p className=" flex h-5 items-center space-x-2 text-muted-foreground">
-          <span>Mon, 10 Mar 2024</span>
+          <span>{moment(event?.date).format("ddd, MMM Do, YYYY")}</span>
           <Separator orientation="vertical" />
-          <span>2:10 pm - 3:30 pm</span>
+          <span>
+            {moment(event?.timeFrom, "HH:mm").format("hh:mm a")} -{" "}
+            {moment(event?.timeTo, "HH:mm").format("hh:mm a")}
+          </span>
         </p>
         <p className=" flex h-5 items-center space-x-2 text-muted-foreground">
-          <span>2.5 km away</span>
+          <span>{distance} km away</span>
           <Separator orientation="vertical" />
-          <span>45 mins</span>
+          <span>{travelTime}</span>
         </p>
-        <p className=" flex flex-col space-y-2 text-muted-foreground">
-          <span>3-B Apartment</span>
-          <span>ABC Alley Street,</span>
-          <span>City, State, Country 000000</span>
+        <p className="flex flex-col space-y-2 text-muted-foreground">
+          <span>{address?.address_line1},</span>
+          <span>{address?.address_line2}</span>
         </p>
-        <p className="leading-7 my-6">
-          You can also use variant modifiers to target media queries like
-          responsive breakpoints, dark mode, prefers-reduced-motion, and more.
-          For example, use md:w-full to apply the w-full utility at only medium
-          screen sizes and above. You can also use variant modifiers to target
-          media queries like You can also use variant modifiers to target media
-          queries like responsive breakpoints, dark mode,
-          prefers-reduced-motion, and more. For example, use md:w-full to apply
-          the w-full utility at only medium screen sizes and above. responsive
-          breakpoints, dark mode, prefers-reduced-motion, and more. For example,
-          use md:w-full to apply the w-full utility at only medium screen sizes
-          and above.
-        </p>
-
+        <p className="leading-7 my-6">{event?.description}</p>
         <div className="flex">
           <div className="flex -space-x-6">
             <Avatar>
@@ -61,11 +126,14 @@ export default function Event() {
             </Avatar>
           </div>
           <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm text-muted-foreground">
-            +398
+            +{event?.attendees}
           </div>
         </div>
       </div>
-      <SecondaryFooterMenu />
+      <SecondaryFooterMenu
+        eventId={event?._id}
+        isBookmarked={event?.isBookmarked}
+      />
     </div>
   );
 }

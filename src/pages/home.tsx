@@ -58,6 +58,7 @@ export default function Home() {
         <Separator orientation="vertical" />
         {categories?.map((category) => (
           <Category
+            key={category}
             category={category}
             onBadgeClick={() => handleCategory(category)}
           />
@@ -68,7 +69,7 @@ export default function Home() {
       </h1>
       <div className="flex flex-col gap-4">
         {eventsToDisplay?.map((event) => (
-          <EventCard event={event} coords={coords} /> // Add key for list rendering
+          <EventCard key={event?._id} event={event} coords={coords} /> // Add key for list rendering
         ))}
       </div>
     </div>

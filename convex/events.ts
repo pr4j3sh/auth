@@ -1,7 +1,19 @@
-import { query } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 import { calculateDistance } from "../src/lib/utils";
 import { Event } from "../src/lib/types";
+
+export const getEventById = query({
+  args: { eventId: v.string() }, // Expect an event ID as a string
+  handler: async (ctx, { eventId }) => {
+    const event = await ctx.db
+      .query("events")
+      .filter((q) => q.eq(q.field("_id"), eventId)) // Adjust field name to match your schema
+      .first(); // Get the first matching result
+
+    return event;
+  },
+});
 
 export const get = query({
   args: { currentLat: v.number(), currentLon: v.number() },
@@ -97,5 +109,13 @@ export const getCategories = query({
     const events = await ctx.db.query("events").collect();
     const categories = [...new Set(events.map((event) => event.category))];
     return categories;
+  },
+});
+
+export const bookmarkEvent = mutation({
+  args: { eventId: v.id("events") }, // ID of the event to be bookmarked
+  handler: async (ctx, { eventId }) => {
+    await ctx.db.patch(eventId, { isBookmarked: true });
+    return { success: true };
   },
 });

@@ -46,7 +46,7 @@ export function EventCard({ event, coords }: { event: Event; coords: Coords }) {
   }, [coords?.lat, coords?.lon, event?.lat, event?.lon]);
 
   return (
-    <Link to="/event">
+    <Link to={`/event/${event._id}`}>
       <Card className="md:flex overflow-hidden">
         <div className="md:w-1/3">
           <img
