@@ -1,8 +1,17 @@
 import { Badge } from "./ui/badge";
 
-export default function Category({ category }: { category: string }) {
+export default function Category({
+  category,
+  onBadgeClick,
+}: {
+  category: string;
+}) {
   return (
-    <Badge variant="outline" className="scroll-mx-0.5 snap-start">
+    <Badge
+      onClick={onBadgeClick}
+      variant="outline"
+      className="scroll-mx-0.5 snap-start"
+    >
       {category}
     </Badge>
   );

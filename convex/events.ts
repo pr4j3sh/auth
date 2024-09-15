@@ -30,22 +30,64 @@ export const get = query({
 });
 
 export const getBookmarkedEvents = query({
-  args: {},
-  handler: async (ctx) => {
-    return await ctx.db
+  args: { currentLat: v.number(), currentLon: v.number() },
+  handler: async (ctx, { currentLat, currentLon }) => {
+    // Fetch all bookmarked events
+    const events: Event[] = await ctx.db
       .query("events")
       .filter((q) => q.eq(q.field("isBookmarked"), true))
       .collect();
+
+    // Calculate distance for each event and add it to the event object
+    const eventsWithDistance = events.map((event) => {
+      const distance = calculateDistance(
+        currentLat,
+        currentLon,
+        parseFloat(event.lat),
+        parseFloat(event.lon),
+      );
+      return { ...event, distance };
+    });
+
+    // Sort events by distance
+    const sortedEvents = eventsWithDistance.sort(
+      (a: Event, b: Event) => (a?.distance ?? 0) - (b?.distance ?? 0),
+    );
+
+    return sortedEvents;
   },
 });
 
 export const getEventsByCategory = query({
-  args: { category: v.string() }, // Accepts a category name as an argument
-  handler: async (ctx, { category }) => {
-    return await ctx.db
+  args: {
+    category: v.string(),
+    currentLat: v.number(),
+    currentLon: v.number(),
+  },
+  handler: async (ctx, { category, currentLat, currentLon }) => {
+    // Fetch events by category
+    const events: Event[] = await ctx.db
       .query("events")
       .filter((q) => q.eq(q.field("category"), category))
       .collect();
+
+    // Calculate distance for each event and add it to the event object
+    const eventsWithDistance = events.map((event) => {
+      const distance = calculateDistance(
+        currentLat,
+        currentLon,
+        parseFloat(event.lat),
+        parseFloat(event.lon),
+      );
+      return { ...event, distance };
+    });
+
+    // Sort events by distance
+    const sortedEvents = eventsWithDistance.sort(
+      (a: Event, b: Event) => (a?.distance ?? 0) - (b?.distance ?? 0),
+    );
+
+    return sortedEvents;
   },
 });
 
