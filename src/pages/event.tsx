@@ -27,7 +27,7 @@ export default function Event() {
   const [address, setAddress] = useState({});
 
   const averageSpeed = 60; // Average speed in km/h
-  const apiKey = "a96347f8b85b459b82c1394cb3138232";
+  const apiKey = import.meta.env.VITE_GEO_API_KEY;
 
   useEffect(() => {
     async function fetchLocation() {
