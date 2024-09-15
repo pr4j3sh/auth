@@ -8,7 +8,7 @@ export default function Map() {
       <MapContainer
         className="w-full z-0"
         style={{ height: "calc(100vh - 76px)" }}
-        center={[51.505, -0.09]}
+        center={[27.364068, 79.626092]}
         zoom={13}
         scrollWheelZoom={false}
       >
@@ -16,7 +16,7 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[51.505, -0.09]}>
+        <Marker position={[27.364068, 79.626092]}>
           <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
