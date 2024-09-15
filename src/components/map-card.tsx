@@ -6,28 +6,66 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 import { Separator } from "./ui/separator";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { calculateDistance, calculateTravelTime } from "@/lib/utils";
+import { Event, Coords } from "@/lib/types";
 
-export function MapCard() {
+export function MapCard({
+  event,
+  coords,
+  onCardClick,
+}: {
+  event: Event;
+  coords: Coords;
+}) {
+  const [distance, setDistance] = useState<string>("");
+  const [travelTime, setTravelTime] = useState<string>("");
+
+  const averageSpeed = 60; // Average speed in km/h
+
+  useEffect(() => {
+    async function fetchLocationAndData() {
+      try {
+        const distance = calculateDistance(
+          coords?.lat,
+          coords?.lon,
+          parseFloat(event?.lat),
+          parseFloat(event?.lon),
+        );
+        setDistance(distance.toString());
+
+        const time = calculateTravelTime(distance.toString(), averageSpeed);
+        setTravelTime(time);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchLocationAndData();
+  }, [coords?.lat, coords?.lon, event?.lat, event?.lon]);
   return (
-    <Card className="w-80 shrink-0 snap-center">
+    <Card onClick={onCardClick} className="w-80 shrink-0 snap-center">
       <CardHeader>
         <div className="flex flex-col items-start gap-2">
           <Badge variant="secondary">Technology</Badge>
-          <CardTitle>Convex Hackathon</CardTitle>
+          <CardTitle>{event?.title}</CardTitle>
         </div>
         <CardDescription className="flex h-5 items-center space-x-2">
-          <span>Mon, 10 Mar 2024</span>
+          <span>{moment(event?.date).format("ddd, MMM Do, YYYY")}</span>
           <Separator orientation="vertical" />
-          <span>2:10 pm - 3:30 pm</span>
+          <span>
+            {moment(event?.timeFrom, "HH:mm").format("hh:mm a")} -{" "}
+            {moment(event?.timeTo, "HH:mm").format("hh:mm a")}
+          </span>
         </CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-between">
         <div className="flex h-5 items-center space-x-2 text-sm text-muted-foreground">
-          <span>2.5 km away</span>
+          <span>{distance} km away</span>
           <Separator orientation="vertical" />
-          <span>45 mins</span>
+          <span>{travelTime}</span>
         </div>
       </CardFooter>
     </Card>
