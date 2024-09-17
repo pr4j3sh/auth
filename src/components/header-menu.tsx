@@ -15,7 +15,7 @@ export default function HeaderMenu() {
     <header className="flex gap-2 items-center">
       <div className="justify-center flex-grow">
         <Link to="/">
-          <Avatar>
+          <Avatar className="h-6 w-6">
             <AvatarImage src={Logo} alt="EventSphere" />
             <AvatarFallback>EventSphere</AvatarFallback>
           </Avatar>

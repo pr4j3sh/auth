@@ -17,7 +17,7 @@ export default function Auth() {
       <header className="flex gap-2 items-center">
         <div className="justify-center flex-grow">
           <Link to="/">
-            <Avatar>
+            <Avatar className="h-6 w-6">
               <AvatarImage src={Logo} alt="EventSphere" />
               <AvatarFallback>EventSphere</AvatarFallback>
             </Avatar>
@@ -25,19 +25,21 @@ export default function Auth() {
         </div>
         <ModeToggle />
       </header>
-      <main className="flex flex-grow flex-col items-center md:justify-center gap-4">
-        <div className="flex gap-x-2 items-center">
-          <Avatar>
-            <AvatarImage src={Logo} alt="EventSphere" />
-            <AvatarFallback>EventSphere</AvatarFallback>
-          </Avatar>
-          <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-            EventSphere
-          </h3>
+      <main className="flex flex-grow flex-col items-center md:justify-center gap-8">
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex gap-x-2 items-center md:mt-0 mt-24">
+            <Avatar>
+              <AvatarImage src={Logo} alt="EventSphere" />
+              <AvatarFallback>EventSphere</AvatarFallback>
+            </Avatar>
+            <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+              EventSphere
+            </h3>
+          </div>
+          <p className="leading-7 [&:not(:first-child)]:mt-6">
+            Discover, Connect, and Engage with Events Around You.
+          </p>
         </div>
-        <p className="leading-7 [&:not(:first-child)]:mt-6">
-          Discover, Connect, and Engage with Events Around You.
-        </p>
         <Card className="md:w-[400px]">
           <CardHeader>
             <CardTitle>Sign In</CardTitle>
