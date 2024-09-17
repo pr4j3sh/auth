@@ -5,8 +5,15 @@ import { Button } from "./ui/button";
 import { BookmarkIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Id } from "convex/_generated/dataModel";
 
-export default function SecondaryFooterMenu({ eventId, userId }) {
+export default function SecondaryFooterMenu({
+  eventId,
+  userId,
+}: {
+  eventId: Id<"events">;
+  userId: Id<"users">;
+}) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
 
@@ -41,7 +48,9 @@ export default function SecondaryFooterMenu({ eventId, userId }) {
     try {
       if (isBookmarked) {
         // Delete bookmark if already bookmarked
-        await deleteBookmark({ bookmarkId: checkBookmark?.bookmarkId });
+        await deleteBookmark({
+          bookmarkId: checkBookmark?.bookmarkId as Id<"bookmarks">,
+        });
         setIsBookmarked(false);
       } else {
         // Add bookmark if not already bookmarked

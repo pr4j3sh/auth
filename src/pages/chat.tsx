@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/form";
 import { SendHorizontalIcon } from "lucide-react";
 import moment from "moment";
+import { Id } from "convex/_generated/dataModel";
+import { User } from "@auth/core/types";
 
 const formSchema = z.object({
   message: z.string().min(1, {
@@ -34,11 +36,11 @@ const formSchema = z.object({
 export default function Chat() {
   const { eventId } = useParams();
   const chat = useQuery(api.chatrooms.getChatroom, {
-    eventId: eventId,
+    eventId: eventId as Id<"events">,
   });
   console.log(chat);
   const messages = useQuery(api.messages.get, {
-    eventId: eventId,
+    eventId: eventId as Id<"events">,
   });
 
   console.log(messages);
@@ -47,8 +49,8 @@ export default function Chat() {
 
   const sendMessage = useMutation(api.messages.send);
 
-  const [firstTwoUsers, setFirstTwoUsers] = useState([]);
-  const [remainingCount, setRemainingCount] = useState(0);
+  const [firstTwoUsers, setFirstTwoUsers] = useState<User[]>([]);
+  const [remainingCount, setRemainingCount] = useState<number>(0);
 
   useEffect(() => {
     if (chat?.users) {
@@ -68,8 +70,8 @@ export default function Chat() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await sendMessage({
-        eventId: eventId,
-        userId: user?._id,
+        eventId: eventId as Id<"events">,
+        userId: user?._id as Id<"users">,
         message: values?.message,
       });
     } catch (error) {
@@ -86,8 +88,8 @@ export default function Chat() {
           <div className="flex flex-col gap-2 items-center p-2">
             <div className="flex -space-x-6">
               {firstTwoUsers?.map((user) => (
-                <Avatar key={user?._id}>
-                  <AvatarImage src={user?.image} />
+                <Avatar key={user?.image}>
+                  <AvatarImage src={user?.image as string | undefined} />
                   <AvatarFallback>
                     {user?.name?.charAt(0).toUpperCase() || "N/A"}
                   </AvatarFallback>

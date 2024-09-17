@@ -14,24 +14,29 @@ import {
   getCurrentLocation,
 } from "@/lib/utils";
 import moment from "moment";
+import { Id } from "convex/_generated/dataModel";
+import { User } from "@auth/core/types";
 
 export default function Event() {
   const { eventId } = useParams();
 
   const user = useQuery(api.users.viewer);
   const event = useQuery(api.events.getEventById, {
-    eventId: eventId!,
+    eventId: eventId as string,
   });
   const chat = useQuery(api.chatrooms.getChatroom, {
-    eventId: eventId,
+    eventId: eventId as Id<"events">,
   });
 
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
   const [distance, setDistance] = useState<string>("");
   const [travelTime, setTravelTime] = useState<string>("");
-  const [address, setAddress] = useState({});
-  const [firstTwoUsers, setFirstTwoUsers] = useState([]);
-  const [remainingCount, setRemainingCount] = useState(0);
+  const [address, setAddress] = useState<{
+    address_line1: string;
+    address_line2: string;
+  }>();
+  const [firstTwoUsers, setFirstTwoUsers] = useState<User[]>([]);
+  const [remainingCount, setRemainingCount] = useState<number>(0);
 
   const averageSpeed = 60; // Average speed in km/h
   const apiKey = import.meta.env.VITE_GEO_API_KEY;
@@ -57,8 +62,8 @@ export default function Event() {
         const distance = calculateDistance(
           coords?.lat,
           coords?.lon,
-          parseFloat(event?.lat),
-          parseFloat(event?.lon),
+          parseFloat(event?.lat as string),
+          parseFloat(event?.lon as string),
         );
         setDistance(distance.toString());
 
@@ -76,7 +81,7 @@ export default function Event() {
     async function fetchAddress() {
       try {
         const res = await fetch(
-          `https://api.geoapify.com/v1/geocode/reverse?lat=${parseFloat(event?.lat)}&lon=${parseFloat(event?.lon)}&apiKey=${apiKey}`,
+          `https://api.geoapify.com/v1/geocode/reverse?lat=${parseFloat(event?.lat as string)}&lon=${parseFloat(event?.lon as string)}&apiKey=${apiKey}`,
         );
 
         const data = await res.json();
@@ -132,8 +137,8 @@ export default function Event() {
         <div className="flex">
           <div className="flex -space-x-6">
             {firstTwoUsers?.map((user) => (
-              <Avatar key={user?._id}>
-                <AvatarImage src={user?.image} />
+              <Avatar key={user?.image}>
+                <AvatarImage src={user?.image as string | undefined} />
                 <AvatarFallback>
                   {user?.name?.charAt(0).toUpperCase() || "N/A"}
                 </AvatarFallback>
@@ -147,7 +152,10 @@ export default function Event() {
           )}
         </div>
       </div>
-      <SecondaryFooterMenu eventId={event?._id} userId={user?._id} />
+      <SecondaryFooterMenu
+        eventId={event?._id as Id<"events">}
+        userId={user?._id as Id<"users">}
+      />
     </div>
   );
 }

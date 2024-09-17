@@ -4,7 +4,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "./mode-toggle";
 import { Button } from "./ui/button";
-import { Bell, User } from "lucide-react";
+import { User } from "lucide-react";
+// import { Bell } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Logo from "../assets/favicon.png";

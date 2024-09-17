@@ -5,6 +5,7 @@ export default function Category({
   onBadgeClick,
 }: {
   category: string;
+  onBadgeClick: VoidFunction;
 }) {
   return (
     <Badge

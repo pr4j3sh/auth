@@ -19,15 +19,17 @@ import { calculateDistance, calculateTravelTime } from "@/lib/utils";
 import { Event, Coords } from "@/lib/types";
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { User } from "@auth/core/types";
+import { Id } from "convex/_generated/dataModel";
 
 export function EventCard({ event, coords }: { event: Event; coords: Coords }) {
   const chat = useQuery(api.chatrooms.getChatroom, {
-    eventId: event?._id,
+    eventId: event?._id as Id<"events">,
   });
   const [distance, setDistance] = useState<string>("");
   const [travelTime, setTravelTime] = useState<string>("");
-  const [firstTwoUsers, setFirstTwoUsers] = useState([]);
-  const [remainingCount, setRemainingCount] = useState(0);
+  const [firstTwoUsers, setFirstTwoUsers] = useState<User[]>([]);
+  const [remainingCount, setRemainingCount] = useState<number>(0);
 
   const averageSpeed = 60; // Average speed in km/h
 
@@ -96,8 +98,8 @@ export function EventCard({ event, coords }: { event: Event; coords: Coords }) {
             <div className="flex">
               <div className="flex -space-x-6">
                 {firstTwoUsers?.map((user) => (
-                  <Avatar key={user?._id}>
-                    <AvatarImage src={user?.image} />
+                  <Avatar key={user?.image}>
+                    <AvatarImage src={user?.image as string | undefined} />
                     <AvatarFallback>
                       {user?.name?.charAt(0).toUpperCase() || "N/A"}
                     </AvatarFallback>

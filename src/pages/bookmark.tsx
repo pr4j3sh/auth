@@ -5,13 +5,14 @@ import { api } from "../../convex/_generated/api";
 import { Placeholder } from "@/components/placeholder";
 import { useEffect, useState } from "react";
 import { getCurrentLocation } from "@/lib/utils";
+import { Id } from "convex/_generated/dataModel";
 
 export default function Bookmark() {
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
 
   const user = useQuery(api.users.viewer);
   const events = useQuery(api.bookmarks.getBookmarkedEvents, {
-    userId: user?._id,
+    userId: user?._id as Id<"users">,
   });
 
   console.log(events);

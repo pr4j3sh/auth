@@ -19,6 +19,7 @@ export function MapCard({
 }: {
   event: Event;
   coords: Coords;
+  onCardClick: VoidFunction;
 }) {
   const [distance, setDistance] = useState<string>("");
   const [travelTime, setTravelTime] = useState<string>("");

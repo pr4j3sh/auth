@@ -7,10 +7,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Event, User } from "@/lib/types";
 
-export function ChatCard({ event, users }) {
-  const [firstTwoUsers, setFirstTwoUsers] = useState([]);
-  const [remainingCount, setRemainingCount] = useState(0);
+export function ChatCard({ event, users }: { event: Event; users: User[] }) {
+  const [firstTwoUsers, setFirstTwoUsers] = useState<User[]>([]);
+  const [remainingCount, setRemainingCount] = useState<number>(0);
 
   useEffect(() => {
     if (users) {

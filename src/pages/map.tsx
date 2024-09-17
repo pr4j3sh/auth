@@ -11,9 +11,10 @@ import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import { useEffect, useRef, useState } from "react";
 import { getCurrentLocation } from "@/lib/utils";
+import { Map as LeafletMap } from "leaflet";
 
 export default function Map() {
-  const mapRef = useRef(null);
+  const mapRef = useRef<LeafletMap>(null);
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
   const [mapReady, setMapReady] = useState(false);
 

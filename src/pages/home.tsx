@@ -40,7 +40,7 @@ export default function Home() {
     fetchLocation();
   }, []);
 
-  function handleCategory(category: string) {
+  function handleCategory(category: string): void {
     setSelectedCategory(category);
   }
 
@@ -60,7 +60,7 @@ export default function Home() {
           <Category
             key={category}
             category={category}
-            onBadgeClick={() => handleCategory(category)}
+            onBadgeClick={() => void handleCategory(category)}
           />
         ))}
       </div>
