@@ -32,10 +32,15 @@ export const get = query({
       return { ...event, distance };
     });
 
-    // Sort events by distance
-    const sortedEvents = eventsWithDistance.sort(
-      (a: Event, b: Event) => (a?.distance ?? 0) - (b?.distance ?? 0),
-    );
+    // Sort events by date and then by distance
+    const sortedEvents = eventsWithDistance.sort((a: Event, b: Event) => {
+      const dateComparison =
+        new Date(a.date).getTime() - new Date(b.date).getTime();
+      if (dateComparison !== 0) {
+        return dateComparison; // Sort by date first
+      }
+      return (a?.distance ?? 0) - (b?.distance ?? 0); // Then sort by distance
+    });
 
     return sortedEvents;
   },
@@ -65,10 +70,15 @@ export const getEventsByCategory = query({
       return { ...event, distance };
     });
 
-    // Sort events by distance
-    const sortedEvents = eventsWithDistance.sort(
-      (a: Event, b: Event) => (a?.distance ?? 0) - (b?.distance ?? 0),
-    );
+    // Sort events by date and then by distance
+    const sortedEvents = eventsWithDistance.sort((a: Event, b: Event) => {
+      const dateComparison =
+        new Date(a.date).getTime() - new Date(b.date).getTime();
+      if (dateComparison !== 0) {
+        return dateComparison; // Sort by date first
+      }
+      return (a?.distance ?? 0) - (b?.distance ?? 0); // Then sort by distance
+    });
 
     return sortedEvents;
   },
