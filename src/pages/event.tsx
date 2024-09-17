@@ -17,6 +17,8 @@ import moment from "moment";
 
 export default function Event() {
   const { eventId } = useParams();
+
+  const user = useQuery(api.users.viewer);
   const event = useQuery(api.events.getEventById, {
     eventId: eventId!,
   });
@@ -80,7 +82,7 @@ export default function Event() {
     }
 
     fetchAddress();
-  }, [event?.lat, event?.lon]);
+  }, [apiKey, event?.lat, event?.lon]);
 
   return (
     <div className="container min-h-screen md:w-2/4 mx-auto py-4 md:px-0 px-4 flex flex-col gap-2">
@@ -132,6 +134,7 @@ export default function Event() {
       </div>
       <SecondaryFooterMenu
         eventId={event?._id}
+        userId={user?._id}
         isBookmarked={event?.isBookmarked}
       />
     </div>

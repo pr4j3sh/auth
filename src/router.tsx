@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
     ),
   },
   {
-    path: "/chat",
+    path: "/chat/:eventId",
     element: (
       <ProtectedRoute>
         <Chat />

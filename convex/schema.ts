@@ -16,6 +16,19 @@ const schema = defineSchema({
     attendees: v.number(),
     isBookmarked: v.boolean(),
   }),
+  chatrooms: defineTable({
+    eventId: v.id("events"),
+    userId: v.id("users"),
+  }),
+  bookmarks: defineTable({
+    eventId: v.id("events"),
+    userId: v.id("users"),
+  }),
+  messages: defineTable({
+    eventId: v.id("events"),
+    userId: v.id("users"),
+    message: v.string(),
+  }),
 });
 
 export default schema;

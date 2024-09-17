@@ -16,8 +16,10 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as auth from "../auth.js";
+import type * as chatrooms from "../chatrooms.js";
 import type * as events from "../events.js";
 import type * as http from "../http.js";
+import type * as messages from "../messages.js";
 import type * as resend from "../resend.js";
 import type * as users from "../users.js";
 
@@ -31,8 +33,10 @@ import type * as users from "../users.js";
  */
 declare const fullApi: ApiFromModules<{
   auth: typeof auth;
+  chatrooms: typeof chatrooms;
   events: typeof events;
   http: typeof http;
+  messages: typeof messages;
   resend: typeof resend;
   users: typeof users;
 }>;
