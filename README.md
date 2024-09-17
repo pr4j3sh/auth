@@ -66,7 +66,7 @@ To run **EventSphere** on your local machine, follow these steps:
 
 ## **Usage**
 
-- **Sign Up / Log In**: Create an account or log in using your credentials.
+- **Sign Up / Log In**: Create an account or log in using your credentials or Github/Google.
 - **Find Events**: Browse through the list of events based on your location.
 - **Join Events**: Click on an event to view details, and join the event to participate in the chatroom.
 - **Chat**: Engage in real-time conversations with other event attendees.
