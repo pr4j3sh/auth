@@ -53,6 +53,12 @@ export default function Chat() {
   const [remainingCount, setRemainingCount] = useState<number>(0);
 
   useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }, 0);
+  }, [messages]);
+
+  useEffect(() => {
     if (chat?.users) {
       const slicedUsers = chat.users.slice(0, 2);
       setFirstTwoUsers(slicedUsers);
