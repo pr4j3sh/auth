@@ -78,9 +78,7 @@ export default function Map() {
         {mapReady && <LocationMarker />}
         {events?.map((event) => (
           <Marker position={[parseFloat(event.lat), parseFloat(event.lon)]}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
+            <Popup>{event?.title}</Popup>
           </Marker>
         ))}
       </MapContainer>
