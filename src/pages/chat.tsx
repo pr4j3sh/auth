@@ -36,9 +36,12 @@ export default function Chat() {
   const chat = useQuery(api.chatrooms.getChatroom, {
     eventId: eventId,
   });
+  console.log(chat);
   const messages = useQuery(api.messages.get, {
     eventId: eventId,
   });
+
+  console.log(messages);
 
   const user = useQuery(api.users.viewer);
 
@@ -109,22 +112,32 @@ export default function Chat() {
         {messages?.map((msg, index) => (
           <div
             key={index}
-            className="flex flex-col gap-1 border p-2 rounded-lg"
+            className={`flex ${user?._id === msg?.user?._id ? "justify-end" : "justify-start"}`}
           >
-            <div className="flex items-center justify-between">
-              <span className="font-semibold">{msg?.user?.name}</span>
-              <span className="text-muted-foreground text-sm">
-                {moment(msg.timeStamp).format("MMM D, YYYY | h:mm a")}
+            <div
+              className={`w-5/6 flex flex-col gap-1 border p-2 rounded-lg  `}
+            >
+              <div
+                className={`flex ${user?._id === msg?.user?._id ? "flex-row-reverse" : "flex-row"}  items-center justify-between`}
+              >
+                <span className="font-semibold">{msg?.user?.name}</span>
+                <span className="text-muted-foreground text-sm">
+                  {moment(msg.timeStamp).format("MMM D, YYYY | h:mm a")}
+                </span>
+              </div>
+              <span
+                className={`flex ${user?._id === msg?.user?._id ? "justify-end" : "justify-start"}`}
+              >
+                {msg?.message}
               </span>
             </div>
-            <span>{msg?.message}</span>
           </div>
         ))}
       </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex justify-between gap-x-2"
+          className="flex justify-between gap-x-2 sticky bottom-2 z-100 bg-background"
         >
           <FormField
             control={form.control}

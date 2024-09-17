@@ -17,10 +17,17 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { calculateDistance, calculateTravelTime } from "@/lib/utils";
 import { Event, Coords } from "@/lib/types";
+import { useQuery } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 export function EventCard({ event, coords }: { event: Event; coords: Coords }) {
+  const chat = useQuery(api.chatrooms.getChatroom, {
+    eventId: event?._id,
+  });
   const [distance, setDistance] = useState<string>("");
   const [travelTime, setTravelTime] = useState<string>("");
+  const [firstTwoUsers, setFirstTwoUsers] = useState([]);
+  const [remainingCount, setRemainingCount] = useState(0);
 
   const averageSpeed = 60; // Average speed in km/h
 
@@ -44,6 +51,14 @@ export function EventCard({ event, coords }: { event: Event; coords: Coords }) {
 
     fetchLocationAndData();
   }, [coords?.lat, coords?.lon, event?.lat, event?.lon]);
+
+  useEffect(() => {
+    if (chat?.users) {
+      const slicedUsers = chat.users.slice(0, 2);
+      setFirstTwoUsers(slicedUsers);
+      setRemainingCount(chat.users.length - slicedUsers.length);
+    }
+  }, [chat?.users]);
 
   return (
     <Link to={`/event/${event._id}`}>
@@ -80,19 +95,20 @@ export function EventCard({ event, coords }: { event: Event; coords: Coords }) {
             </div>
             <div className="flex">
               <div className="flex -space-x-6">
-                <Avatar>
-                  <AvatarImage src="https://github.com/prajesheleven.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <Avatar>
-                  <AvatarImage src="https://github.com/prajesheleven.png" />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                {firstTwoUsers?.map((user) => (
+                  <Avatar key={user?._id}>
+                    <AvatarImage src={user?.image} />
+                    <AvatarFallback>
+                      {user?.name?.charAt(0).toUpperCase() || "N/A"}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
               </div>
-              <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm text-muted-foreground">
-                {"+"}
-                {event?.attendees}
-              </div>
+              {remainingCount > 0 && (
+                <span className="text-sm text-muted-foreground">
+                  +{remainingCount}
+                </span>
+              )}
             </div>
           </CardFooter>
         </div>

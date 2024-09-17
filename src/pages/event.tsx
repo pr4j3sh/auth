@@ -22,11 +22,16 @@ export default function Event() {
   const event = useQuery(api.events.getEventById, {
     eventId: eventId!,
   });
+  const chat = useQuery(api.chatrooms.getChatroom, {
+    eventId: eventId,
+  });
 
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
   const [distance, setDistance] = useState<string>("");
   const [travelTime, setTravelTime] = useState<string>("");
   const [address, setAddress] = useState({});
+  const [firstTwoUsers, setFirstTwoUsers] = useState([]);
+  const [remainingCount, setRemainingCount] = useState(0);
 
   const averageSpeed = 60; // Average speed in km/h
   const apiKey = import.meta.env.VITE_GEO_API_KEY;
@@ -84,6 +89,14 @@ export default function Event() {
     fetchAddress();
   }, [apiKey, event?.lat, event?.lon]);
 
+  useEffect(() => {
+    if (chat?.users) {
+      const slicedUsers = chat.users.slice(0, 2);
+      setFirstTwoUsers(slicedUsers);
+      setRemainingCount(chat.users.length - slicedUsers.length);
+    }
+  }, [chat?.users]);
+
   return (
     <div className="container min-h-screen md:w-2/4 mx-auto py-4 md:px-0 px-4 flex flex-col gap-2">
       <SecondaryHeaderMenu />
@@ -118,25 +131,23 @@ export default function Event() {
         <p className="leading-7 my-6">{event?.description}</p>
         <div className="flex">
           <div className="flex -space-x-6">
-            <Avatar>
-              <AvatarImage src="https://github.com/prajesheleven.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <Avatar>
-              <AvatarImage src="https://github.com/prajesheleven.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+            {firstTwoUsers?.map((user) => (
+              <Avatar key={user?._id}>
+                <AvatarImage src={user?.image} />
+                <AvatarFallback>
+                  {user?.name?.charAt(0).toUpperCase() || "N/A"}
+                </AvatarFallback>
+              </Avatar>
+            ))}
           </div>
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm text-muted-foreground">
-            +{event?.attendees}
-          </div>
+          {remainingCount > 0 && (
+            <span className="text-sm text-muted-foreground">
+              +{remainingCount}
+            </span>
+          )}
         </div>
       </div>
-      <SecondaryFooterMenu
-        eventId={event?._id}
-        userId={user?._id}
-        isBookmarked={event?.isBookmarked}
-      />
+      <SecondaryFooterMenu eventId={event?._id} userId={user?._id} />
     </div>
   );
 }

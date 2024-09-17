@@ -9,10 +9,12 @@ import { getCurrentLocation } from "@/lib/utils";
 export default function Bookmark() {
   const [coords, setCoords] = useState({ lat: 0, lon: 0 });
 
-  const events = useQuery(api.events.getBookmarkedEvents, {
-    currentLat: coords.lat,
-    currentLon: coords.lon,
+  const user = useQuery(api.users.viewer);
+  const events = useQuery(api.bookmarks.getBookmarkedEvents, {
+    userId: user?._id,
   });
+
+  console.log(events);
 
   useEffect(() => {
     async function fetchLocation() {

@@ -10,18 +10,19 @@ export const bookEvent = mutation({
 });
 
 export const get = query({
-  args: {},
-  handler: async (ctx) => {
-    const chatrooms = await ctx.db.query("chatrooms").collect();
+  args: {
+    userId: v.string(), // Add userId as an argument
+  },
+  handler: async (ctx, { userId }) => {
+    // Filter chatrooms by userId
+    const chatrooms = await ctx.db
+      .query("chatrooms")
+      .filter((q) => q.eq(q.field("userId"), userId))
+      .collect();
 
     const eventsMap: Chatroom = {};
 
     for (const room of chatrooms) {
-      const userDetails = await ctx.db
-        .query("users")
-        .filter((q) => q.eq(q.field("_id"), room.userId))
-        .first();
-
       if (!eventsMap[room.eventId]) {
         const eventDetails = await ctx.db
           .query("events")
@@ -29,15 +30,32 @@ export const get = query({
           .first();
 
         if (eventDetails) {
+          // Fetch all chatrooms for this event to get the userIds
+          const eventChatrooms = await ctx.db
+            .query("chatrooms")
+            .filter((cr) => cr.eq(cr.field("eventId"), room.eventId))
+            .collect();
+
+          // Extract userIds from the fetched chatrooms
+          const userIds = eventChatrooms.map((chatroom) => chatroom.userId);
+
+          // Fetch all users individually without using 'in'
+          const allUsers = [];
+          for (const id of userIds) {
+            const user = await ctx.db
+              .query("users")
+              .filter((q) => q.eq(q.field("_id"), id))
+              .first();
+            if (user) {
+              allUsers.push(user);
+            }
+          }
+
           eventsMap[room.eventId] = {
             event: eventDetails,
-            users: [],
+            users: allUsers, // Store all users of the event
           };
         }
-      }
-
-      if (userDetails) {
-        eventsMap[room.eventId].users.push(userDetails);
       }
     }
 
@@ -80,6 +98,25 @@ export const getChatroom = query({
     return {
       event: eventDetails,
       users: users.filter((user) => user !== null),
+    };
+  },
+});
+
+export const checkEvent = query({
+  args: {
+    eventId: v.id("events"), // Required eventId
+    userId: v.id("users"), // Required userId
+  },
+  handler: async (ctx, { eventId, userId }) => {
+    // Query chatrooms to check if there is an entry for the given eventId and userId
+    const chatroom = await ctx.db
+      .query("chatrooms")
+      .filter((q) => q.eq(q.field("eventId"), eventId)) // First filter by eventId
+      .filter((q) => q.eq(q.field("userId"), userId)) // Then filter by userId
+      .first(); // Fetch the first matching chatroom
+
+    return {
+      isBooked: !!chatroom, // Return true if chatroom exists, false otherwise
     };
   },
 });
