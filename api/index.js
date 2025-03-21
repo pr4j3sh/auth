@@ -24,6 +24,7 @@ const origins = process.env.ORIGINS;
 const server = express();
 const logger = initLogger("info", transports);
 
+server.set("trust proxy", 1);
 server.use(express.json());
 server.use(corsHandler(origins));
 server.use(logHandler("combined", { stream: streamHandler(logger) }));
@@ -42,6 +43,8 @@ server.get(
     });
   }),
 );
+
+server.get("/ip", (req, res) => res.send(req.ip));
 
 server.post(
   "/api/auth/register",
