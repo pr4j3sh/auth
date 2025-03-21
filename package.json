@@ -12,7 +12,7 @@
   "license": "MIT",
   "description": "vercel deployed express authentication server",
   "dependencies": {
-    "exhandlers": "^1.1.4",
+    "exhandlers": "^1.1.5",
     "express": "^4.21.2"
   },
   "devDependencies": {
