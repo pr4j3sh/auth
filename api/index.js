@@ -137,7 +137,7 @@ server.use(notFoundHandler);
 server.use(errorHandler);
 
 server.listen(port, hostname, async () => {
-  await mongoHandler(process.env.MONGO_URI);
+  await mongoHandler(process.env.MONGODB_URI);
   logger.info(`server running @ http://${hostname}:${port}`);
 });
 
