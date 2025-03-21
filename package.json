@@ -1,0 +1,21 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "main": "api/index.js",
+  "scripts": {
+    "test": "echo \"Running tests..\" && exit 1",
+    "start": "node --env-file=.env .",
+    "dev": "nodemon --env-file=.env ."
+  },
+  "keywords": [],
+  "author": "Prajesh Pratap Singh <prajesh.eleven118@gmail.com> (https://pr4j3sh.github.io/pr4j3sh/)",
+  "license": "MIT",
+  "description": "vercel deployed express authentication server",
+  "dependencies": {
+    "exhandlers": "^1.1.4",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
