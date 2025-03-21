@@ -1,8 +1,12 @@
 const {
   errorHandler,
   notFoundHandler,
+  logHandler,
   asyncHandler,
   corsHandler,
+  initLogger,
+  transports,
+  streamHandler,
   rateLimitHandler,
   tokenHandler,
   passwordHandler,
@@ -18,9 +22,11 @@ const hostname = process.env.HOSTNAME;
 const origins = process.env.ORIGINS;
 
 const server = express();
+const logger = initLogger("info", transports);
 
 server.use(express.json());
 server.use(corsHandler(origins));
+server.use(logHandler("combined", { stream: streamHandler(logger) }));
 server.use(rateLimitHandler({ windowMs: 10 * 60 * 1000, limit: 100 }));
 
 server.get(
@@ -129,7 +135,7 @@ server.use(errorHandler);
 
 server.listen(port, hostname, async () => {
   await mongoHandler(process.env.MONGO_URI);
-  console.log(`server running @ http://${hostname}:${port}`);
+  logger.info(`server running @ http://${hostname}:${port}`);
 });
 
 module.exports = server;
