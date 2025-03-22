@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "Prajesh Pratap Singh <prajesh.eleven118@gmail.com> (https://pr4j3sh.github.io/pr4j3sh/)",
   "license": "MIT",
-  "description": "vercel deployed express authentication server",
+  "description": "railway deployed express authentication server",
   "dependencies": {
     "exhandlers": "^1.1.5",
     "express": "^4.21.2"
