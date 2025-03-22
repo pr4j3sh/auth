@@ -1,7 +1,7 @@
 {
   "name": "auth",
   "version": "1.0.0",
-  "main": "api/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Running tests..\" && exit 1",
     "start": "node --env-file=.env .",
