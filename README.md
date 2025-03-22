@@ -1,13 +1,22 @@
 # auth
 
-This is an express js vercel deployable authentication server.
+This is an express js railway deployed authentication server.
+
+### API References
+
+```bash
+GET https://pr4j3sh-auth.up.railway.app/  # health check
+POST https://pr4j3sh-auth.up.railway.app/api/auth/register  # user registration
+POST https://pr4j3sh-auth.up.railway.app/api/auth/login  # user login
+GET https://pr4j3sh-auth.up.railway.app/api/auth/profile  # user profile
+```
 
 ## Usage
 
 - user registration
 
 ```bash
-curl -X POST https://pr4j3sh-auth/api/auth/register -H 'Content-Type: application/json' -d '{"username":"john", "password":"123456"}'
+curl -X POST https://pr4j3sh-auth.up.railway.app/api/auth/register -H 'Content-Type: application/json' -d '{"username":"john", "password":"123456"}'
 ```
 
 > return jwt token
@@ -15,7 +24,7 @@ curl -X POST https://pr4j3sh-auth/api/auth/register -H 'Content-Type: applicatio
 - user login
 
 ```bash
-curl -X POST https://pr4j3sh-auth/api/auth/login -H 'Content-Type: application/json' -d '{"username":"john", "password":"123456"}'
+curl -X POST https://pr4j3sh-auth.up.railway.app/api/auth/login -H 'Content-Type: application/json' -d '{"username":"john", "password":"123456"}'
 ```
 
 > return jwt token
@@ -23,7 +32,7 @@ curl -X POST https://pr4j3sh-auth/api/auth/login -H 'Content-Type: application/j
 - user profile
 
 ```bash
-curl -X GET https://pr4j3sh-auth/api/auth/profile -H 'Authorization: Bearer <token>'
+curl -X GET https://pr4j3sh-auth.up.railway.app/api/auth/profile -H 'Authorization: Bearer <token>'
 ```
 
 > return user details
@@ -32,5 +41,5 @@ curl -X GET https://pr4j3sh-auth/api/auth/profile -H 'Authorization: Bearer <tok
 
 - [exhandlers Documentation](https://pr4j3sh.github.io/exhandlers/)
 - [ExpressJs Documentation](https://expressjs.com/en/starter/hello-world.html)
-- [Vercel Documentation](https://vercel.com/guides/using-express-with-vercel)
+- [Railway Documentation](https://docs.railway.com/guides/express)
 - [@pr4j3sh/frames](https://github.com/pr4j3sh/frames)
