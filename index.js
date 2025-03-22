@@ -15,7 +15,7 @@ const {
   hashHandler,
 } = require("exhandlers");
 const express = require("express");
-const { User } = require("../src/schema");
+const { User } = require("./src/schema");
 
 const port = process.env.PORT;
 const hostname = process.env.HOSTNAME;
