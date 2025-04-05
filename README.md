@@ -2,6 +2,8 @@
 
 This is an express js railway deployed authentication server.
 
+> Currently limited to `10 req/min/user`
+
 ### API References
 
 ```bash
