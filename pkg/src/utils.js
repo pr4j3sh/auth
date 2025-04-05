@@ -24,4 +24,15 @@ async function login(payload) {
   return data;
 }
 
-module.exports = { register, login };
+async function profile(token) {
+  const res = await fetch(url + "api/auth/profile", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+}
+
+module.exports = { register, login, profile };

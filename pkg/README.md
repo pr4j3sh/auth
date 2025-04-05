@@ -1,4 +1,4 @@
-# Auth Server SDK
+# auth SDK
 
 This is an authentication server software development kit.
 
@@ -7,7 +7,20 @@ This is an authentication server software development kit.
 - Install using `npm`
 
 ```bash
-npm i pr4j3sh/auth
+npm i @pr4j3sh/auth
+```
+
+- User Registration
+
+```js
+const { register } = require("@pr4j3sh/auth");
+
+register({
+  username: "john",
+  password: "123456",
+})
+  .then((res) => console.log(res))
+  .catch((err) => console.error(err.message));
 ```
 
 - User Login
@@ -23,15 +36,13 @@ login({
   .catch((err) => console.error(err.message));
 ```
 
-- User Register
+- User Profile
 
 ```js
-const { register } = require("@pr4j3sh/auth");
+const { profile } = require("@pr4j3sh/auth");
 
-register({
-  username: "john",
-  password: "123456",
-})
+// pass JWT token received from registering or logging in
+profile("jndj24r09jfinrufixj2")
   .then((res) => console.log(res))
   .catch((err) => console.error(err.message));
 ```
