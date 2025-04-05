@@ -17,7 +17,7 @@ GET https://pr4j3sh-auth.up.railway.app/api/auth/profile  # user profile
 
 ### SDK
 
-- Install using `npm`
+- Install [@pr4j3sh/auth](https://www.npmjs.com/package/@pr4j3sh/auth)
 
 ```bash
 npm i @pr4j3sh/auth
