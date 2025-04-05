@@ -20,7 +20,7 @@ GET https://pr4j3sh-auth.up.railway.app/api/auth/profile  # user profile
 - Install using `npm`
 
 ```bash
-npm i pr4j3sh/auth
+npm i @pr4j3sh/auth
 ```
 
 - User Registration
