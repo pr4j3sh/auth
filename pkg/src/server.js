@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const jwt = require("jsonwebtoken");
-const { asyncHandler } = require("exhandlers");
 
 const userSchema = new Schema(
   {
@@ -43,27 +42,31 @@ const User = model("User", userSchema);
  * });
  * ```
  */
-const authHandler = asyncHandler(async (req, res, next) => {
-  const header = req.headers["authorization"];
-  if (!header || !header.startsWith("Bearer ")) {
-    return res.status(401).json({ message: "unauthorized" });
-  }
-
-  const token = header.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ message: "unauthorized" });
-  }
-
-  const payload = jwt.decode(token);
-  const user = await User.findById(payload.userId);
-
-  jwt.verify(token, user.secret, (err, payload) => {
-    if (err) {
+const authHandler = async (req, res, next) => {
+  try {
+    const header = req.headers["authorization"];
+    if (!header || !header.startsWith("Bearer ")) {
       return res.status(401).json({ message: "unauthorized" });
     }
-    req.user = payload;
-    next();
-  });
-});
+
+    const token = header.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "unauthorized" });
+    }
+
+    const payload = jwt.decode(token);
+    const user = await User.findById(payload.userId);
+
+    jwt.verify(token, user.secret, (err, payload) => {
+      if (err) {
+        return res.status(401).json({ message: "unauthorized" });
+      }
+      req.user = payload;
+      next();
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "internal server error" });
+  }
+};
 
 module.exports = { authHandler };
