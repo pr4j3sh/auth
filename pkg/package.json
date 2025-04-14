@@ -12,7 +12,8 @@
     "test": "echo \"No test specified\" && exit 0",
     "build": "node esbuild.config.js",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "docs": "npx jsdoc-to-mdx -c config.json"
   },
   "files": [
     "dist"
@@ -27,7 +28,7 @@
   ],
   "author": "Prajesh Pratap Singh <prajesh.eleven118@gmail.com> (https://pr4j3sh.github.io/pr4j3sh/)",
   "license": "MIT",
-  "homepage": "https://github.com/pr4j3sh/auth#readme",
+  "homepage": "https://pr4j3sh.github.io/auth/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pr4j3sh/auth.git"

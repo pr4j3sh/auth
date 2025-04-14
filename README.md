@@ -1,27 +1,24 @@
 # auth
 
-This is an express js railway deployed authentication server.
+`auth` is an authentication server, that allows users to register, login, access profile and build their own backend system without worrying about user authentication.
 
-> Currently limited to `10 req/min/user`
+> limited to `10 req/min/user`
 
-### API References
+## Documentation
 
-```bash
-GET https://pr4j3sh-auth.up.railway.app/  # health check
-POST https://pr4j3sh-auth.up.railway.app/api/auth/register  # user registration
-POST https://pr4j3sh-auth.up.railway.app/api/auth/login  # user login
-GET https://pr4j3sh-auth.up.railway.app/api/auth/profile  # user profile
-```
+[View Documentation](https://pr4j3sh.github.io/auth/)
 
-## Usage
-
-### SDK
+## Installation
 
 - Install [@pr4j3sh/auth](https://www.npmjs.com/package/@pr4j3sh/auth)
 
 ```bash
 npm i @pr4j3sh/auth
 ```
+
+## Usage
+
+### SDK
 
 - User Registration
 
@@ -36,29 +33,6 @@ register({
   .catch((err) => console.error(err.message));
 ```
 
-- User Login
-
-```js
-const { login } = require("@pr4j3sh/auth");
-
-login({
-  username: "john",
-  password: "123456",
-})
-  .then((res) => console.log(res))
-  .catch((err) => console.error(err.message));
-```
-
-- User Profile
-
-```js
-const { profile } = require("@pr4j3sh/auth");
-
-profile("jndj24r09jfinrufixj2")
-  .then((res) => console.log(res))
-  .catch((err) => console.error(err.message));
-```
-
 ### Curl
 
 - User registration
@@ -68,22 +42,6 @@ curl -X POST https://pr4j3sh-auth.up.railway.app/api/auth/register -H 'Content-T
 ```
 
 > returns JWT token
-
-- User login
-
-```bash
-curl -X POST https://pr4j3sh-auth.up.railway.app/api/auth/login -H 'Content-Type: application/json' -d '{"username":"john", "password":"123456"}'
-```
-
-> returns JWT token
-
-- User profile
-
-```bash
-curl -X GET https://pr4j3sh-auth.up.railway.app/api/auth/profile -H 'Authorization: Bearer <token>'
-```
-
-> returns user details
 
 ## References
 

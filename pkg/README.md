@@ -1,14 +1,24 @@
-# auth SDK
+# auth
 
-This is an authentication server software development kit.
+`auth` is an authentication server, that allows users to register, login, access profile and build their own backend system without worrying about user authentication.
 
-## Usage
+> limited to `10 req/min/user`
 
-- Install using `npm`
+## Documentation
+
+[View Documentation](https://pr4j3sh.github.io/auth/)
+
+## Installation
+
+- Install [@pr4j3sh/auth](https://www.npmjs.com/package/@pr4j3sh/auth)
 
 ```bash
 npm i @pr4j3sh/auth
 ```
+
+## Usage
+
+### SDK
 
 - User Registration
 
@@ -23,33 +33,19 @@ register({
   .catch((err) => console.error(err.message));
 ```
 
-- User Login
+### Curl
 
-```js
-const { login } = require("@pr4j3sh/auth");
+- User registration
 
-login({
-  username: "john",
-  password: "123456",
-})
-  .then((res) => console.log(res))
-  .catch((err) => console.error(err.message));
+```bash
+curl -X POST https://pr4j3sh-auth.up.railway.app/api/auth/register -H 'Content-Type: application/json' -d '{"username":"john", "password":"123456"}'
 ```
 
-- User Profile
+> returns JWT token
 
-```js
-const { profile } = require("@pr4j3sh/auth");
+## References
 
-// pass JWT token received from registering or logging in
-profile("jndj24r09jfinrufixj2")
-  .then((res) => console.log(res))
-  .catch((err) => console.error(err.message));
-```
-
-## Reference
-
-- [Authentication Server](https://pr4j3sh-auth.up.railway.app/)
-- [NodeJS Documentation](https://nodejs.org/en/learn/getting-started/introduction-to-nodejs)
-- [NPM Documentation](https://docs.npmjs.com/)
-- [@pr4j3sh/frames](https://pr4j3sh.github.io/frames/)
+- [exhandlers Documentation](https://pr4j3sh.github.io/exhandlers/)
+- [ExpressJs Documentation](https://expressjs.com/en/starter/hello-world.html)
+- [Railway Documentation](https://docs.railway.com/guides/express)
+- [@pr4j3sh/frames](https://github.com/pr4j3sh/frames)

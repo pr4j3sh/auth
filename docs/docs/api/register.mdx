@@ -1,0 +1,32 @@
+---
+custom_edit_url: null
+---
+
+```ts
+function register(payload: Object)
+```
+
+<div>
+  <span className="badge badge--success">async</span>
+</div>
+
+Registers a new user with the given payload.
+
+**Returns**: Promise&lt;Object&gt;
+- The response data from the server.
+
+|PARAMETER|TYPE|OPTIONAL|DEFAULT|DESCRIPTION|
+|:---:|:---:|:---:|:---:|:---:|
+|payload|Object|||The registration details (e.g., username, password).|
+
+```js
+const payload = {
+  username: "johndoe",
+  password: "securepassword123"
+};
+
+register(payload).then(response => {
+  console.log(response);
+});
+```
+

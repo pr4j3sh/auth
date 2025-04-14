@@ -37,9 +37,11 @@ const User = model("User", userSchema);
  * @returns {Promise<void>}
  *
  * @example
+ * ```js
  * app.get("/protected", authHandler, (req, res) => {
  *   res.json({ user: req.user });
  * });
+ * ```
  */
 const authHandler = asyncHandler(async (req, res, next) => {
   const header = req.headers["authorization"];
