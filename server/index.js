@@ -10,12 +10,13 @@ const {
   rateLimitHandler,
   tokenHandler,
   passwordHandler,
-  authenticationHandler,
   mongoHandler,
   hashHandler,
 } = require("exhandlers");
 const express = require("express");
+const crypto = require("node:crypto");
 const { User } = require("./src/schema");
+const { authHandler } = require("./src/utils");
 
 const port = process.env.PORT;
 const hostname = process.env.HOSTNAME;
@@ -62,14 +63,20 @@ server.post(
 
     const hash = await hashHandler(password);
 
+    const secret = crypto
+      .createHash("sha1")
+      .update(`${username}${process.env.SECRET}${Date.now()}`)
+      .digest("hex");
+
     const user = new User({
       username,
       password: hash,
+      secret,
     });
 
     await user.save();
 
-    const token = await tokenHandler({ userId: user._id }, process.env.SECRET);
+    const token = await tokenHandler({ userId: user._id }, secret);
 
     res.status(201).json({
       success: true,
@@ -100,7 +107,7 @@ server.post(
       throw new Error("wrong credentials");
     }
 
-    const token = await tokenHandler({ userId: user._id }, process.env.SECRET);
+    const token = await tokenHandler({ userId: user._id }, user.secret);
 
     res.status(200).json({
       success: true,
@@ -114,11 +121,11 @@ server.post(
 
 server.get(
   "/api/auth/profile",
-  authenticationHandler(process.env.SECRET),
+  authHandler,
   asyncHandler(async (req, res) => {
     const { userId } = req.user;
 
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select("-password -secret");
     if (!user) {
       throw new Error("user not found");
     }
@@ -128,6 +135,27 @@ server.get(
       message: "user profile",
       data: {
         user,
+      },
+    });
+  }),
+);
+
+server.get(
+  "/api/auth/secret",
+  authHandler,
+  asyncHandler(async (req, res) => {
+    const { userId } = req.user;
+
+    const secret = await User.findById(userId).select("secret");
+    if (!secret) {
+      throw new Error("user not found");
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "user secret",
+      data: {
+        secret,
       },
     });
   }),
