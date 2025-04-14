@@ -35,4 +35,15 @@ async function profile(token) {
   return data;
 }
 
-module.exports = { register, login, profile };
+async function secret(token) {
+  const res = await fetch(url + "api/auth/secret", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+  return data;
+}
+
+module.exports = { register, login, profile, secret };

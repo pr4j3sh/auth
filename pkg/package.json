@@ -1,7 +1,7 @@
 {
   "name": "@pr4j3sh/auth",
   "description": "Authentication server SDK",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "exports": {
@@ -38,5 +38,8 @@
   "devDependencies": {
     "esbuild": "^0.24.0",
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
   }
 }
