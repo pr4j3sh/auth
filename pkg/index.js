@@ -1,10 +1,8 @@
-const { register, login, profile, secret } = require("./src/client");
-const { authHandler } = require("./src/server");
+const { register, login, profile, secret } = require("./src/utils");
 
 module.exports = {
   register,
   login,
   profile,
   secret,
-  authHandler,
 };
