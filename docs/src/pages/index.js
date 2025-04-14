@@ -22,6 +22,12 @@ function HomepageHeader() {
           >
             Getting Started
           </Link>
+          <a
+            className="button button--secondary button--lg"
+            href="https://pr4j3sh-auth.up.railway.app/"
+          >
+            Visit Server
+          </a>
         </div>
       </div>
     </header>
