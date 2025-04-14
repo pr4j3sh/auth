@@ -1,7 +1,8 @@
+const { asyncHandler } = require("exhandlers");
 const { User } = require("./schema");
 const jwt = require("jsonwebtoken");
 
-const authHandler = async (req, res, next) => {
+const authHandler = asyncHandler(async (req, res, next) => {
   const header = req.headers["authorization"];
   if (!header || !header.startsWith("Bearer ")) {
     return res.status(401).json({ message: "unauthorized" });
@@ -22,6 +23,6 @@ const authHandler = async (req, res, next) => {
     req.user = payload;
     next();
   });
-};
+});
 
 module.exports = { authHandler };

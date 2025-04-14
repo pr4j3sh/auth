@@ -37,6 +37,10 @@
   },
   "devDependencies": {
     "esbuild": "^0.24.0",
+    "jsdoc-to-mdx": "^1.2.1",
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "exhandlers": "^1.1.5"
   }
 }
