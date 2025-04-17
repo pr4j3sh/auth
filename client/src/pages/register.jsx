@@ -1,5 +1,7 @@
+import auth from "@pr4j3sh/auth";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const values = {
@@ -7,16 +9,25 @@ export default function Register() {
     password: "",
   };
 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(values);
 
   function onChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
-    console.log(formData);
-    setFormData(values);
+  async function onSubmit(e) {
+    try {
+      e.preventDefault();
+      if (!formData.username || !formData.password)
+        throw new Error("provide a username and a password");
+      const res = await auth.register(formData);
+      if (!res.success) throw new Error(res.message);
+      setFormData(values);
+      navigate("/dashboard");
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   return (
