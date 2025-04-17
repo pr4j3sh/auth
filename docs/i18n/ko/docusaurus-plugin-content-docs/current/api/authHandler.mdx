@@ -21,6 +21,8 @@ Middleware to authenticate requests using a JWT token.<br /><br />Extracts the B
 |next|function|||The next middleware function.|
 
 ```js
+const { authHandler } = require("@pr4j3sh/auth")
+
 app.get("/protected", authHandler, (req, res) => {
   res.json({ user: req.user });
 });

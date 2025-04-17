@@ -37,6 +37,8 @@ const User = model("User", userSchema);
  *
  * @example
  * ```js
+ * const { authHandler } = require("@pr4j3sh/auth")
+ *
  * app.get("/protected", authHandler, (req, res) => {
  *   res.json({ user: req.user });
  * });

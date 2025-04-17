@@ -10,14 +10,15 @@ const { url } = require("./consts");
  *
  * @example
  * ```js
+ * import auth from "@pr4j3sh/auth";
+ *
  * const payload = {
  *   username: "johndoe",
  *   password: "securepassword123"
  * };
  *
- * register(payload).then(response => {
- *   console.log(response);
- * });
+ * const res = await auth.register(payload);
+ * console.log(res);
  * ```
  */
 async function register(payload) {
@@ -42,14 +43,15 @@ async function register(payload) {
  *
  * @example
  * ```js
+ * import auth from "@pr4j3sh/auth";
+ *
  * const payload = {
  *   username: "johndoe",
  *   password: "securepassword123"
  * };
  *
- * login(payload).then(response => {
- *   console.log(response);
- * });
+ * const res = await auth.login(payload);
+ * console.log(res);
  * ```
  */
 async function login(payload) {
@@ -74,11 +76,12 @@ async function login(payload) {
  *
  * @example
  * ```js
+ * import auth from "@pr4j3sh/auth";
+ *
  * const token = "your_jwt_token_here";
  *
- * profile(token).then(user => {
- *   console.log(user);
- * });
+ * const res = await auth.profile(token);
+ * console.log(res);
  * ```
  */
 async function profile(token) {
@@ -102,11 +105,12 @@ async function profile(token) {
  *
  * @example
  * ```js
+ * import auth from "@pr4j3sh/auth";
+ *
  * const token = "your_jwt_token_here";
  *
- * secret(token).then(data => {
- *   console.log(data);
- * });
+ * const res = await auth.secret(token);
+ * console.log(res);
  * ```
  */
 async function secret(token) {

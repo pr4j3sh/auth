@@ -1,4 +1,4 @@
-import { login } from "@pr4j3sh/auth";
+import auth from "@pr4j3sh/auth";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function Login() {
   async function onSubmit(e) {
     e.preventDefault();
     console.log(formData);
-    const res = await login(formData);
+    const res = await auth.login(formData);
     console.log(res);
     setFormData(values);
   }

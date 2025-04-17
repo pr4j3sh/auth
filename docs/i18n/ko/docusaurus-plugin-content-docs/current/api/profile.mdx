@@ -20,10 +20,11 @@ Fetches the authenticated user's profile using the provided token.
 |token|string|||The JWT access token for authentication.|
 
 ```js
+import auth from "@pr4j3sh/auth";
+
 const token = "your_jwt_token_here";
 
-profile(token).then(user => {
-  console.log(user);
-});
+const res = await auth.profile(token);
+console.log(res);
 ```
 
