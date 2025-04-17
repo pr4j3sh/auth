@@ -10,7 +10,7 @@ function authHandler(req: Object, res: Object, next: function)
   <span className="badge badge--success">async</span>
 </div>
 
-Middleware to authenticate requests using a JWT token.<br /><br />Extracts the Bearer token from the Authorization header, decodes it to get the user ID,<br />retrieves the user's secret, and verifies the token. If valid, attaches the decoded payload<br />to `req.user` and calls `next()`. Responds with 401 if authentication fails.
+Server side middleware to authenticate requests using a JWT token.<br /><br />Extracts the Bearer token from the Authorization header, decodes it to get the user ID,<br />retrieves the user's secret, and verifies the token. If valid, attaches the decoded payload<br />to `req.user` and calls `next()`. Responds with 401 if authentication fails.
 
 **Returns**: Promise&lt;void&gt;
 

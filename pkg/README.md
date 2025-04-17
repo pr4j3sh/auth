@@ -20,17 +20,30 @@ npm i @pr4j3sh/auth
 
 ### SDK
 
+#### Client side
+
 - User Registration
 
 ```js
-const { register } = require("@pr4j3sh/auth");
+import auth from "@pr4j3sh/auth";
 
-register({
-  username: "john",
-  password: "123456",
-})
-  .then((res) => console.log(res))
-  .catch((err) => console.error(err.message));
+const payload = {
+  username: "johndoe",
+  password: "securepassword123",
+};
+
+const res = await auth.register(payload);
+console.log(res);
+```
+
+#### Server side
+
+```js
+const { authHandler } = require("@pr4j3sh/auth");
+
+app.get("/protected", authHandler, (req, res) => {
+  res.json({ user: req.user });
+});
 ```
 
 ### Curl

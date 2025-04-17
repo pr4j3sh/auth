@@ -22,7 +22,7 @@ const userSchema = new Schema(
 const User = model("User", userSchema);
 
 /**
- * Middleware to authenticate requests using a JWT token.
+ * Server side middleware to authenticate requests using a JWT token.
  *
  * Extracts the Bearer token from the Authorization header, decodes it to get the user ID,
  * retrieves the user's secret, and verifies the token. If valid, attaches the decoded payload
