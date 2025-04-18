@@ -1,6 +1,6 @@
 # pr4j3sh/auth
 
-> client
+> server
 
 `pr4j3sh/auth` is an authentication service that enables user registration, login, and profile access. With our SDKs, developers can easily integrate authentication into their own applications.
 

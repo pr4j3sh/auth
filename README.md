@@ -1,12 +1,12 @@
-# auth
+# pr4j3sh/auth
 
-`auth` is an authentication server, that allows users to register, login, access profile and build their own backend system without worrying about user authentication.
+`pr4j3sh/auth` is an authentication service that enables user registration, login, and profile access. With our SDKs, developers can easily integrate authentication into their own applications.
 
 > limited to `10 req/min/user`
 
 ## Documentation
 
-[View Documentation](https://pr4j3sh.github.io/auth/)
+[Website](https://pr4j3sh-auth.vercel.app/) | [Documentation](https://pr4j3sh.github.io/auth/)
 
 ## Installation
 

@@ -1,7 +1,7 @@
 {
   "name": "@pr4j3sh/auth",
   "description": "Authentication server SDK",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "exports": {

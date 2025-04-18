@@ -6,6 +6,6 @@ slug: /getting-started
 
 # Getting Started
 
-`auth` is an authentication server, that allows users to register, login, access profile and build their own backend system without worrying about user authentication.
+`pr4j3sh/auth` is an authentication service that enables user registration, login, and profile access. With our SDKs, developers can easily integrate authentication into their own applications.
 
-[Browse Server](https://pr4j3sh-auth.up.railway.app/)
+[Website](https://pr4j3sh-auth.vercel.app/) | [Server](https://pr4j3sh-auth.up.railway.app/)

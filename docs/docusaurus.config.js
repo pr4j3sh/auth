@@ -59,6 +59,11 @@ const config = {
           label: "API Reference",
         },
         {
+          href: `https://pr4j3sh-auth.vercel.app/`,
+          label: "Website",
+          position: "right",
+        },
+        {
           href: `https://www.npmjs.com/package/@pr4j3sh/${info.name}`,
           label: "Download",
           position: "right",
