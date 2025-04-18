@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 export default function Home() {
   return (
     <section>
+      <img src="/hero.jpg" alt="" />
       <article>
         <p className="font-semibold">Hey there,</p>
         <p>
-          This is auth, authentication server. Create your account or login to
-          services. Or, use our SDK to implement auth in your product.
+          This is an authentication service that enables user registration,
+          login, and profile access. With our SDKs, developers can easily
+          integrate authentication into their own applications.
         </p>
       </article>
       <article className="btns">
