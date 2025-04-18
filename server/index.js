@@ -29,7 +29,16 @@ server.set("trust proxy", 1);
 server.use(express.json());
 server.use(corsHandler(origins));
 server.use(logHandler("combined", { stream: streamHandler(logger) }));
-server.use(rateLimitHandler({ windowMs: 60 * 60 * 1000, limit: 10 }));
+server.use(
+  rateLimitHandler({
+    windowMs: 60 * 60 * 1000,
+    limit: 10,
+    message: {
+      success: false,
+      message: "Too many requests. Please try again later.",
+    },
+  }),
+);
 
 server.get(
   "/",
