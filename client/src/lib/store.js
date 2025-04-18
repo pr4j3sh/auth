@@ -35,7 +35,7 @@ export const userStore = create((set, get) => ({
   secret: async () => {
     const token = get().token;
     const res = await auth.secret(token);
-    set({ key: res?.data?.secret });
+    set({ key: res?.data?.secret?.secret });
     return { success: res.success, message: res.message };
   },
 
