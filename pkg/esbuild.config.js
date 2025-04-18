@@ -3,7 +3,7 @@ const esbuild = require("esbuild");
 try {
   esbuild.buildSync({
     entryPoints: ["server.js"],
-    outfile: "dist/index.cjs",
+    outfile: "./dist/index.cjs",
     format: "cjs",
     bundle: true,
     minify: true,
@@ -19,7 +19,7 @@ try {
 try {
   esbuild.buildSync({
     entryPoints: ["client.js"],
-    outfile: "dist/index.mjs",
+    outfile: "./dist/index.mjs",
     format: "esm",
     bundle: true,
     minify: true,
