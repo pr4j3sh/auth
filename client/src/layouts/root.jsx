@@ -7,15 +7,11 @@ import { userStore } from "../lib/store";
 
 export default function Root() {
   const navigate = useNavigate();
-  const { user, token, profile } = userStore();
+  const { user } = userStore();
 
   useEffect(() => {
     if (user) navigate("/dashboard");
   }, [navigate, user]);
-
-  useEffect(() => {
-    if (token && !user) profile();
-  }, [profile, token, user]);
 
   return (
     <div className="container">

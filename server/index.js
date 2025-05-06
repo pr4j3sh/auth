@@ -85,13 +85,19 @@ server.post(
 
     await user.save();
 
-    const token = await tokenHandler({ userId: user._id }, secret);
+    const token = await tokenHandler(
+      { id: user._id, username: user.username, secret: user.secret },
+      user.secret,
+    );
 
     res.status(201).json({
       success: true,
       message: "user registered",
       data: {
         token,
+        user: {
+          username,
+        },
       },
     });
   }),
@@ -116,55 +122,19 @@ server.post(
       throw new Error("wrong credentials");
     }
 
-    const token = await tokenHandler({ userId: user._id }, user.secret);
+    const token = await tokenHandler(
+      { id: user._id, username: user.username, secret: user.secret },
+      user.secret,
+    );
 
     res.status(200).json({
       success: true,
       message: "user logged in",
       data: {
         token,
-      },
-    });
-  }),
-);
-
-server.get(
-  "/api/auth/profile",
-  authHandler,
-  asyncHandler(async (req, res) => {
-    const { userId } = req.user;
-
-    const user = await User.findById(userId).select("-password -secret");
-    if (!user) {
-      throw new Error("user not found");
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "user profile",
-      data: {
-        user,
-      },
-    });
-  }),
-);
-
-server.get(
-  "/api/auth/secret",
-  authHandler,
-  asyncHandler(async (req, res) => {
-    const { userId } = req.user;
-
-    const secret = await User.findById(userId).select("secret");
-    if (!secret) {
-      throw new Error("user not found");
-    }
-
-    res.status(200).json({
-      success: true,
-      message: "user secret",
-      data: {
-        secret,
+        user: {
+          username,
+        },
       },
     });
   }),

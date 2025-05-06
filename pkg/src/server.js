@@ -1,25 +1,4 @@
-const { Schema, model } = require("mongoose");
 const jwt = require("jsonwebtoken");
-
-const userSchema = new Schema(
-  {
-    username: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    secret: {
-      type: String,
-    },
-  },
-  { timestamps: true },
-);
-
-const User = model("User", userSchema);
 
 /**
  * Server side middleware to authenticate requests using a JWT token.
@@ -57,9 +36,9 @@ const authHandler = async (req, res, next) => {
     }
 
     const payload = jwt.decode(token);
-    const user = await User.findById(payload.userId);
+    const secret = payload.secret;
 
-    jwt.verify(token, user.secret, (err, payload) => {
+    jwt.verify(token, secret, (err, payload) => {
       if (err) {
         return res.status(401).json({ message: "unauthorized" });
       }
