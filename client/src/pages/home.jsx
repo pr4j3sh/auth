@@ -8,8 +8,8 @@ export default function Home() {
         <p className="font-semibold">Hey there,</p>
         <p>
           This is an authentication service that enables user registration,
-          login, and profile access. With our SDKs, developers can easily
-          integrate authentication into their own applications.
+          login. With our SDKs, developers can easily integrate authentication
+          into their own applications.
         </p>
       </article>
       <article className="btns">
