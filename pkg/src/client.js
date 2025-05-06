@@ -1,7 +1,7 @@
 const { url } = require("./consts");
 
 /**
- * Registers a new user with the given payload.
+ * Registers a new user with the given payload and returns a JWT token along with user details.
  *
  * @async
  * @function
@@ -34,7 +34,7 @@ async function register(payload) {
 }
 
 /**
- * Logs in a user with the given credentials.
+ * Logs in a user with the given credentials and returns a JWT token along with user details.
  *
  * @async
  * @function

@@ -16,7 +16,6 @@ const {
 const express = require("express");
 const crypto = require("node:crypto");
 const { User } = require("./src/schema");
-const { authHandler } = require("./src/utils");
 
 const port = process.env.PORT;
 const hostname = process.env.HOSTNAME;

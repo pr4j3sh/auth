@@ -6,8 +6,6 @@ module.exports = {
       "items": [
         "api/register",
         "api/login",
-        "api/profile",
-        "api/secret",
         "api/authHandler"
       ]
     }

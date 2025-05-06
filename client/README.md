@@ -2,7 +2,7 @@
 
 > client
 
-`pr4j3sh/auth` is an authentication service that enables user registration, login, and profile access. With our SDKs, developers can easily integrate authentication into their own applications.
+`pr4j3sh/auth` is an authentication service that enables user registration, login. With our SDKs, developers can easily integrate authentication into their own applications.
 
 > limited to `10 req/min/user`
 
